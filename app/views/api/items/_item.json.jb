@@ -1,9 +1,9 @@
-{ 
+{
   id: item.id,
   item_name: item.name,
   item_description: item.description,
   item_weight: item.weight,
   item_quantity: item.quantity,
   item_url: item.url,
-  item_category: item.category,  
+  item_category: item.category
 }

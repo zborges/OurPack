@@ -1,6 +1,6 @@
 class Api::CategoriesController < ApplicationController
-  def index 
+  def index
     @category = Category.all
-    render "index.json.jb"
+    render 'index.json.jb'
   end
 end

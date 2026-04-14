@@ -1,0 +1,9 @@
+{
+  "[ruby]": {
+    "editor.defaultFormatter": "misogi.ruby-rubocop",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.rubocop": "explicit"
+    }
+  }
+}

@@ -1,7 +1,7 @@
-user = render partial: "user.json.jb", locals: { user: @user }
+user = render partial: 'user.json.jb', locals: { user: @user }
 
 user[:items] = @user.pack.items.map do |item|
-  render partial: "/api/items/item", locals: { item: item }
+  render partial: '/api/items/item', locals: { item: item }
 end
 user
 # map through items in partial and add to user show..

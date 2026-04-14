@@ -1,18 +1,19 @@
 User.create!([
-  # { email: "sydstewart@example.com", password_digest: "$2a$12$KgDtXN1XOXz1Ds3f/LAfbuaq3wklyIuQH9F5ncfn9MgBJil8Weelu", name: "Syd Stewart" },
-  # { email: "zackborges@example.com", password_digest: "$2a$12$Ckm4qph74YBvFz6qlG9C5eXbI3vECGTFbOIJ.Sv/uNT1JhjwODNbu", name: "Zack Borges" },
-  # { email: "rexryan@example.com", password_digest: "$2a$12$H20NCsNAQDA82yc8AzYex.DOfYWW6z.5D3ch14JyMIlHYa0UHXopW", name: "Rex Ryan" },
-  # { email: "example@example.com", password_digest: "$2a$12$YRHFiJnNn6qWz8u40gBL/OatUz/0ZRax4GJaTjKck7ZowtrjIqFim", name: "example gear" },
-  # { email: "steve@example.com", password_digest: "$2a$12$1YwBLvkK3ZVGCrEhhRLDKO0RIvA7uDgcYCj91Q8MOyK/MQP/0YYbK", name: "Steve" },
-  # { email: "hello@example.com", password_digest: "$2a$12$tKJfgevMD3ACuLXqVBzodecsXovl.BZbN1T5fuQhX66uEU3xjgZxC", name: "hello" },
-  # { email: "johnny@example.com", password_digest: "$2a$12$4QpemYBuXW6atvnS0FnlzOHTIJJzAK1lm3aGczLtqm50Q443WTjsW", name: "Johnny Cash" },
-  # { email: "jay@example.com", password_digest: "$2a$12$h2xIZxr4pC2oLwrQu3M9suM.yYQ0ZAk15k8coav/HvrkrECB2auvS", name: "Jay" },
-  { email: "test@email.com", password_digest: "$2a$12$h2xIZxr4pC2oLwrQu3M9suM.yYQ0ZAk15k8coav/HvrkrECB2auvS", name: "Test User" },
-])
+               # { email: "sydstewart@example.com", password_digest: "$2a$12$KgDtXN1XOXz1Ds3f/LAfbuaq3wklyIuQH9F5ncfn9MgBJil8Weelu", name: "Syd Stewart" },
+               # { email: "zackborges@example.com", password_digest: "$2a$12$Ckm4qph74YBvFz6qlG9C5eXbI3vECGTFbOIJ.Sv/uNT1JhjwODNbu", name: "Zack Borges" },
+               # { email: "rexryan@example.com", password_digest: "$2a$12$H20NCsNAQDA82yc8AzYex.DOfYWW6z.5D3ch14JyMIlHYa0UHXopW", name: "Rex Ryan" },
+               # { email: "example@example.com", password_digest: "$2a$12$YRHFiJnNn6qWz8u40gBL/OatUz/0ZRax4GJaTjKck7ZowtrjIqFim", name: "example gear" },
+               # { email: "steve@example.com", password_digest: "$2a$12$1YwBLvkK3ZVGCrEhhRLDKO0RIvA7uDgcYCj91Q8MOyK/MQP/0YYbK", name: "Steve" },
+               # { email: "hello@example.com", password_digest: "$2a$12$tKJfgevMD3ACuLXqVBzodecsXovl.BZbN1T5fuQhX66uEU3xjgZxC", name: "hello" },
+               # { email: "johnny@example.com", password_digest: "$2a$12$4QpemYBuXW6atvnS0FnlzOHTIJJzAK1lm3aGczLtqm50Q443WTjsW", name: "Johnny Cash" },
+               # { email: "jay@example.com", password_digest: "$2a$12$h2xIZxr4pC2oLwrQu3M9suM.yYQ0ZAk15k8coav/HvrkrECB2auvS", name: "Jay" },
+               { email: 'test@email.com', password_digest: '$2a$12$h2xIZxr4pC2oLwrQu3M9suM.yYQ0ZAk15k8coav/HvrkrECB2auvS',
+                 name: 'Test User' }
+             ])
 
-p = Pack.create!([
-  { user_id: 1 }
-])
+Pack.create!([
+               { user_id: 1 }
+             ])
 
 # p.item.create!([
 #   {
@@ -49,16 +50,16 @@ p = Pack.create!([
 #   { item_name: "Big Agnes TigerWall UL3", item_description: "A tent for 3. Lightweight and compact.", item_weight: 33.6, item_quantity: 1, item_url: "https://www.rei.com/product/128991/big-agnes-tiger-wall-ul3-tent" },
 # ])
 Category.create!([
-  { name: "Clothing" },
-  { name: "Cookware and Filtration" },
-  { name: "Electronics" },
-  { name: "Toiletries" },
-  { name: "Repair and Med Kit" },
-  { name: "Shoes" },
-  { name: "Misc." },
-  { name: "Shelter and Sleep System" },
-  { name: "Big 3 + Sleep Pad" },
-])
+                   { name: 'Clothing' },
+                   { name: 'Cookware and Filtration' },
+                   { name: 'Electronics' },
+                   { name: 'Toiletries' },
+                   { name: 'Repair and Med Kit' },
+                   { name: 'Shoes' },
+                   { name: 'Misc.' },
+                   { name: 'Shelter and Sleep System' },
+                   { name: 'Big 3 + Sleep Pad' }
+                 ])
 # CategoryJoin.create!([
 #   { category_id: 22, gear_id: 2 },
 #   { category_id: 22, gear_id: 3 },
