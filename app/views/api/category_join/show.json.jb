@@ -1,1 +1,1 @@
-render partial: "category_join.json.jb", locals: { category_join: @category_join }
+render partial: 'category_join.json.jb', locals: { category_join: @category_join }

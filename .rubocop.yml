@@ -1,0 +1,30 @@
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.2
+  TargetRailsVersion: 7.0
+  Exclude:
+    - "bin/**/*"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "db/schema.rb"
+    - "db/migrate/*"
+
+# Relaxed settings for Rails projects
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Metrics/ClassLength:
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "config/**/*"

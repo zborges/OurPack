@@ -3,5 +3,5 @@
   item_name: pack.item.name,
   item_description: pack.item.description,
   item_weight: pack.item.weight,
-  item_quantity: pack.item.quantity,
+  item_quantity: pack.item.quantity
 }

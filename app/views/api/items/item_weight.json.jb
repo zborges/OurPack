@@ -2,6 +2,6 @@
   {
     id: item.id,
     item_weight: item.weight,
-    category_id: item.category.id,
+    category_id: item.category.id
   }
 end
