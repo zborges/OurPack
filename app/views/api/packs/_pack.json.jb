@@ -1,7 +1,0 @@
-{
-  user_id: pack.user.id,
-  item_name: pack.item.name,
-  item_description: pack.item.description,
-  item_weight: pack.item.weight,
-  item_quantity: pack.item.quantity
-}

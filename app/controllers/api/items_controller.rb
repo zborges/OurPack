@@ -1,62 +1,45 @@
 class Api::ItemsController < ApplicationController
-  def index
-    @item = item.all
-    render 'index.json.jb'
-  end
+  before_action :set_item, only: [:show, :update, :destroy]
 
-  def weight
-    @item = item.all
-    render 'item_weight.json.jb'
+  def index
+    @items = current_user.pack.items
+    render :index
   end
 
   def show
-    @input = params[:id]
-    @item = item.find(@input)
-    render 'show.json.jb'
+    render :show
   end
 
-  # ..
   def create
-    @item = item.new(
-      name: params[:name],
-      item_description: params[:item_description],
-      item_weight: params[:item_weight],
-      item_quantity: params[:item_quantity],
-      item_url: params[:item_url]
-    )
-    # item gets created and has a category id associated with it.
-    # Check to see if user has a pack.
-    # If user has a pack, add this item to it. If not, create pack.
-
-    if @item.save # if item gets saved, create instance of a pack. Pack.new
-      # @pack.sav
-      # @category_join.save
-      render 'show.json.jb'
+    @item = current_user.pack.items.build(item_params)
+    
+    if @item.save
+      render :show, status: :created
     else
-      render json: { error: @item.errors.full_messages }
+      render json: { error: @item.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def update
-    input = params[:id]
-    @item = item.find(input)
-    @item.item_name = params[:item_name] || @item.item_name
-    @item.item_description = params[:item_description] || @item.item_description
-    @item.item_weight = params[:item_weight] || @item.item_weight
-    @item.item_quantity = params[:item_quantity] || @item.item_quantity
-    @item.item_url = params[:item_url] || @item.item_url
-
-    if @item.save
-      render 'show.json.jb'
+    if @item.update(item_params)
+      render :show
     else
-      render json: { errors: @item.errors.full_messages }, status: :not_acceptable
+      render json: { error: @item.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    input = params[:id]
-    @item = item.find(input)
-    @item.delete
-    render json: { message: 'item deleted' }
+    @item.destroy
+    render json: { message: 'Item deleted successfully' }
+  end
+
+  private
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
+  def item_params
+    params.require(:item).permit(:name, :description, :weight, :quantity, :url, :category)
   end
 end
