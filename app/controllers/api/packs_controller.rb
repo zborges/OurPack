@@ -1,39 +1,30 @@
 class Api::PacksController < ApplicationController
-  def index
-    @pack = Pack.all
-    render 'index.json.jb'
-  end
+  before_action :set_pack, only: [:destroy]
 
-  def show
-    @input = params[:id]
-    @pack = Pack.find(@input)
-    render 'show.json.jb'
+  def index
+    @pack = current_user.pack
+    'index.json.jb'
   end
 
   def create
     @pack = Pack.new(
       user_id: params[:user_id]
     )
-    @pack.save
-    render 'show.json.jb'
-  end
-
-  def update
-    input = params[:id]
-    @pack = Pack.find(input)
-    @pack.user_id = params[:user_id] || @pack.user_id
-    @pack.gear_id = params[:gear_id] || @pack.gear_id
     if @pack.save
-      render json: { message: 'pack updated' }
+     'show.json.jb'
     else
-      render json: { errors: @pack.errors.full_messages }, status: :bad_request
+      render json: { error: @pack.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    input = params[:id]
-    @pack = Pack.find(input)
-    @pack.delete
-    render json: { message: 'pack association deleted' }
+    @pack.destroy
+    render json: { message: 'pack deleted successfully' }
+  end
+
+  private 
+
+  def set_pack
+    @pack = Pack.find(params[:id])
   end
 end

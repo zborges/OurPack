@@ -1,5 +1,0 @@
-{
-  id: category_join.id,
-  category_id: category_join.category_id,
-  gear_id: category_join.gear_id
-}
