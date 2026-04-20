@@ -1,25 +1,21 @@
 class Api::PacksController < ApplicationController
+  before_action :authenticate_user
   before_action :set_pack, only: [:destroy]
 
   def index
     @pack = current_user.pack
-    'index.json.jb'
+    render :index
   end
 
   def create
     @pack = Pack.new(
-      user_id: params[:user_id]
+      user_id: current_user.id
     )
     if @pack.save
-     'show.json.jb'
+      render :index, status: :created
     else
       render json: { error: @pack.errors.full_messages }, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @pack.destroy
-    render json: { message: 'pack deleted successfully' }
   end
 
   private 
