@@ -3,15 +3,17 @@ module RequestHelpers
     JSON.parse(response.body)
   end
 
-  def auth_headers_for(user, secret: 'test-jwt-secret')
+  def auth_headers_for(user)
     token = JWT.encode(
       { user_id: user.id, exp: 24.hours.from_now.to_i },
-      secret,
+      Rails.application.secret_key_base,
       'HS256'
     )
 
-    { 'Authorization' => "Bearer #{token}" }
-    { "Accept" => "application/json" }
+    {
+      'Authorization' => "Bearer #{token}",
+      'Accept' => 'application/json'
+    }
   end
 end
 

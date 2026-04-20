@@ -1,8 +1,9 @@
 class Api::ItemsController < ApplicationController
+  before_action :authenticate_user
   before_action :set_item, only: [:show, :update, :destroy]
 
   def index
-    @items = current_user.pack.items
+    @items = current_pack.items
     render :index
   end
 
@@ -11,7 +12,7 @@ class Api::ItemsController < ApplicationController
   end
 
   def create
-    @item = current_user.pack.items.build(item_params)
+    @item = current_pack.items.build(item_params)
     
     if @item.save
       render :show, status: :created
@@ -34,6 +35,10 @@ class Api::ItemsController < ApplicationController
   end
 
   private
+
+  def current_pack
+    @current_pack ||= current_user.pack || Pack.create!(user: current_user)
+  end
 
   def set_item
     @item = Item.find(params[:id])

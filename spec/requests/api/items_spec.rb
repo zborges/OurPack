@@ -1,15 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Api::Items', type: :request do
-  let(:jwt_secret) { 'test-jwt-secret' }
   let(:user) { User.create!(name: 'Test User', email: 'items@example.com', password: 'password123') }
   let(:pack) { Pack.create!(user: user) }
-  let(:headers) { auth_headers_for(user, secret: jwt_secret) }
+  let(:headers) { auth_headers_for(user) }
 
-  before do
-    allow(Rails.application.credentials).to receive(:fetch).with(:secret_key).and_return(jwt_secret)
-    pack
-  end
 
   describe 'GET /api/items' do
     it 'returns only current user items' do
@@ -39,11 +34,10 @@ RSpec.describe 'Api::Items', type: :request do
           category: 'sleep_system'
         }
       }
-
       expect do
         post '/api/items', params: params, headers: headers
       end.to change(Item, :count).by(1)
-
+      
       expect(response).to have_http_status(:created)
       expect(json_response['item_name']).to eq('Quilt')
     end

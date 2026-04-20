@@ -175,10 +175,13 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
-    pry (0.16.0)
+    pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-      reline (>= 0.6.0)
+    pry-nav (1.0.0)
+      pry (>= 0.9.10, < 0.15)
+    pry-rails (0.3.11)
+      pry (>= 0.13.0)
     psych (5.3.1)
       date
       stringio
@@ -340,6 +343,8 @@ DEPENDENCIES
   listen (~> 3.3)
   pg (~> 1.5)
   pry
+  pry-nav
+  pry-rails
   puma (~> 6.0)
   rack-cors
   rack-mini-profiler (~> 2.0)
@@ -425,7 +430,9 @@ CHECKSUMS
   pp (0.6.3) sha256=2951d514450b93ccfeb1df7d021cae0da16e0a7f95ee1e2273719669d0ab9df6
   prettyprint (0.2.0) sha256=2bc9e15581a94742064a3cc8b0fb9d45aae3d03a1baa6ef80922627a0766f193
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85
-  pry (0.16.0) sha256=d76c69065698ed1f85e717bd33d7942c38a50868f6b0673c636192b3d1b6054e
+  pry (0.14.2) sha256=c4fe54efedaca1d351280b45b8849af363184696fcac1c72e0415f9bdac4334d
+  pry-nav (1.0.0) sha256=616b57f84ca478e606f28b04bbc218dc32818885ddea86903c6fc58171a99354
+  pry-rails (0.3.11) sha256=a69e28e24a34d75d1f60bcf241192a54253f8f7ef8a62cba1e75750a9653593d
   psych (5.3.1) sha256=eb7a57cef10c9d70173ff74e739d843ac3b2c019a003de48447b2963d81b1974
   puma (6.6.1) sha256=b9b56e4a4ea75d1bfa6d9e1972ee2c9f43d0883f011826d914e8e37b3694ea1e
   racc (1.8.1) sha256=4a7f6929691dbec8b5209a0b373bc2614882b55fc5d2e447a21aaa691303d62f
