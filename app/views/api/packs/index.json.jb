@@ -1,4 +1,0 @@
-{
-  weight: @pack.total_weight,
-  number_of_items: @pack.items.count
-}
