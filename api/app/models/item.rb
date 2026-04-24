@@ -1,8 +1,12 @@
 class Item < ApplicationRecord
   belongs_to :pack
-  has_one :user, through: :packs
+  has_one :user, through: :pack
   validates :category, presence: true
 
+  # To Add: 
+    # Sort by Heaviest/Lightest
+    # display_weight
+    # weight_conversions (module)
   enum category: {
     shelter: 0,
     sleep_system: 1,

@@ -22,7 +22,7 @@ export default function SignIn() {
     setError(null)
   }
 
-  const handleSubmit = async (e: SubmitEvent) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
@@ -40,71 +40,87 @@ export default function SignIn() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-8">
-      <div className="w-full max-w-[420px] p-10 bg-bg border border-border rounded-2xl shadow-lg">
-        <div className="text-center mb-8">
-          <h1 className="text-[28px] mb-2">Welcome back</h1>
-          <p className="text-text">Sign in to your account to continue</p>
+    <div className="min-h-screen bg-black flex flex-col" style={{ background: 'black' }}>
+      <header className="bg-amber-900 py-4">
+        <div className="container mx-auto px-4">
+          <h1 className="text-white text-xl font-bold">Backpacking Gear Tracker</h1>
         </div>
+      </header>
 
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-          {error && (
-            <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-600 text-sm text-left rounded-lg">
-              {error}
+      <div className="flex-1 flex items-center justify-center p-8">
+        <div className="w-full max-w-[440px]">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold text-white mb-3">Sign in</h1>
+            <p className="text-gray-400 text-lg">Enter your email to continue</p>
+          </div>
+
+          <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+            {error && (
+              <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 text-sm text-left rounded-lg">
+                {error}
+              </div>
+            )}
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="name@example.com"
+                required
+                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+              />
             </div>
-          )}
 
-          <div className="flex flex-col gap-2 text-left">
-            <label htmlFor="email" className="text-sm font-medium text-text-h">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="you@example.com"
-              required
-              className="px-4 py-3 text-base border border-border rounded-lg bg-bg text-text-h focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 placeholder:text-text"
-            />
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                required
+                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="py-4 text-lg font-semibold text-white bg-blue-600 rounded-lg cursor-pointer transition-all hover:bg-blue-700 active:scale-[0.98]"
+              disabled={loading}
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+
+          <div className="text-center mt-8 text-gray-400">
+            Don't have an account?{' '}
+            <Link
+              to="/sign-up"
+              className="text-blue-500 font-semibold hover:underline"
+            >
+              Sign up
+            </Link>
           </div>
-
-          <div className="flex flex-col gap-2 text-left">
-            <label htmlFor="password" className="text-sm font-medium text-text-h">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="Enter your password"
-              required
-              className="px-4 py-3 text-base border border-border rounded-lg bg-bg text-text-h focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 placeholder:text-text"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="py-3.5 text-base font-medium text-white bg-accent border-none rounded-lg cursor-pointer transition-opacity active:scale-[0.98] hover:opacity-90 focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
-            disabled={loading}
-          >
-            {loading ? 'Signing in...' : 'Sign in'}
-          </button>
-        </form>
-
-        <div className="text-center text-sm text-text">
-          Don't have an account?{' '}
-          <Link
-            to="/sign-up"
-            className="text-accent no-underline font-medium hover:underline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
-          >
-            Sign up
-          </Link>
         </div>
       </div>
+
+      <footer className="bg-amber-900 py-4">
+        <div className="container mx-auto px-4">
+          <p className="text-center text-gray-300 text-sm">
+            © 2026 Backpacking Gear Tracker. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </div>
   )
 }

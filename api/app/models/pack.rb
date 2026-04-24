@@ -2,7 +2,7 @@ class Pack < ApplicationRecord
   has_many :items
   belongs_to :user
   
-  def total_weight
+  def weight
     items.sum(:weight)
   end
 

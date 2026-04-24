@@ -6,7 +6,7 @@ const rootRoute = createRootRoute()
 
 const signInRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: '/sign-in',
+  path: '/',
   component: SignIn,
 })
 
