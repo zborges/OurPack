@@ -1,3 +1,7 @@
+# Project has been discontinued. Deciding to use Next.js for my api + client. 
+
+# It is a sad day to leave RoR behind but the requirements and the times have changed.
+
 # 🏕️ Backpacking Gear Tracker (Monorepo)
 
 A refactor of my first fully independent full-stack project — rebuilt with improved architecture, type safety, and scalability in mind.
