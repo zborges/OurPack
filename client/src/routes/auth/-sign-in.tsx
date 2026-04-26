@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
+import { InputText } from '../../components/InputText'
 
 interface SignInFormData {
   email: string
@@ -59,37 +60,27 @@ export default function SignIn() {
               </div>
             )}
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@example.com"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="Email"
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="name@example.com"
+              required
+            />
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Enter your password"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="Password"
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              required
+            />
 
             <button
               type="submit"

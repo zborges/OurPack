@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
+import { InputText } from '../../components/InputText'
 
 interface SignUpFormData {
   name: string
@@ -75,69 +76,49 @@ export default function SignUp() {
               </div>
             )}
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="name" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                Full Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="name"
+              type="name"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="John Doe"
+              required
+            />
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="name@example.com"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="email"
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="johndoe@email.com"
+              required
+            />
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Create a password"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="password"
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
 
-            <div className="flex flex-col gap-2">
-              <label htmlFor="confirmPassword" className="text-sm font-semibold text-gray-300 uppercase tracking-wide">
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                id="confirmPassword"
-                name="confirmPassword"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-                placeholder="Confirm password"
-                required
-                className="input-default"
-              />
-            </div>
+            <InputText
+              label="confirmPassword"
+              type="confirmPassword"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Password"
+              required
+            />
 
             <button
               type="submit"
