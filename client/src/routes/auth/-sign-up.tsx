@@ -54,7 +54,7 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col" style={{ background: 'black' }}>
+    <div className="min-h-screen bg-bg flex flex-col">
       <header className="bg-amber-900 py-4">
         <div className="container mx-auto px-4">
           <h1 className="text-white text-xl font-bold">Backpacking Gear Tracker</h1>
@@ -70,7 +70,7 @@ export default function SignUp() {
 
           <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 text-sm text-left rounded-lg">
+              <div className="error-default">
                 {error}
               </div>
             )}
@@ -87,7 +87,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 placeholder="John Doe"
                 required
-                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+                className="input-default"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 placeholder="name@example.com"
                 required
-                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+                className="input-default"
               />
             </div>
 
@@ -119,7 +119,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 placeholder="Create a password"
                 required
-                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+                className="input-default"
               />
             </div>
 
@@ -135,7 +135,7 @@ export default function SignUp() {
                 onChange={handleChange}
                 placeholder="Confirm password"
                 required
-                className="px-5 py-4 text-lg border-2 border-gray-700 rounded-lg bg-gray-900 text-white focus:outline-none focus:border-blue-600 placeholder:text-gray-500"
+                className="input-default"
               />
             </div>
 
@@ -151,7 +151,7 @@ export default function SignUp() {
           <div className="text-center mt-8 text-gray-400">
             Already have an account?{' '}
             <Link
-              to="/sign-up"
+              to="/"
               className="text-blue-500 font-semibold hover:underline"
             >
               Sign in
@@ -159,14 +159,6 @@ export default function SignUp() {
           </div>
         </div>
       </div>
-
-      <footer className="bg-amber-900 py-4">
-        <div className="container mx-auto px-4">
-          <p className="text-center text-gray-300 text-sm">
-            © 2026 Backpacking Gear Tracker. All rights reserved.
-          </p>
-        </div>
-      </footer>
     </div>
   )
 }
