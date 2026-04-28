@@ -1,0 +1,1 @@
+I have decided to implement Auth.js due to its relevance in the market and simplicity.
