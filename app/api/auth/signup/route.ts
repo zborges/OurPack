@@ -2,7 +2,7 @@ import { hash } from "bcryptjs";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const signupSchema = z.object({
@@ -11,16 +11,13 @@ const signupSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters"),
 });
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
+export async function POST(req: NextRequest) {
   try {
-    const parseResult = signupSchema.safeParse(req.body);
+    const body = await req.json();
+    const parseResult = signupSchema.safeParse(body);
 
     if (!parseResult.success) {
-      return res.status(400).json({ error: parseResult.error.message });
+      return NextResponse.json({ error: parseResult.error.message }, { status: 400 });
     }
 
     const { name, email, password } = parseResult.data;
@@ -30,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     if (existingUser) {
-      return res.status(409).json({ error: "User already exists" });
+      return NextResponse.json({ error: "User already exists" }, { status: 409 });
     }
 
     const passwordDigest = await hash(password, 10);
@@ -44,9 +41,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       })
       .returning();
 
-    return res.status(201).json({ user: { id: newUser.id, email: newUser.email, name: newUser.name } });
+    return NextResponse.json({ user: { id: newUser.id, email: newUser.email, name: newUser.name } }, { status: 201 });
   } catch (error) {
     console.error("Signup error:", error);
-    return res.status(500).json({ error: "Internal server error" });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

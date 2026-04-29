@@ -1,5 +1,7 @@
+"use client"
+
 import { useState } from 'react'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
  
 export default function LoginPage() {
   const router = useRouter()
@@ -16,19 +18,28 @@ export default function LoginPage() {
     const email = formData.get('email')
     const password = formData.get('password')
  
-    const response = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
- 
-    if (response.ok) {
-      console.log("Success")
-      router.push('/profile')
-    } else {
-      // Handle errors
-      console.log("Login Failed")
-    }
+    try{
+
+        const response = await fetch('/api/auth/signin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        })
+        
+        if (response.ok) {
+            console.log("Success")
+            router.push('/profile')
+        } else {
+            // Handle errors
+            console.log(response)
+            console.log("Login Failed")
+        }
+    } catch (err) {
+        console.error("Network error during signup:", err)
+        setError("Network error. Please check your connection.")
+      } finally {
+        setLoading(false)
+      }
   }
  
   return (
