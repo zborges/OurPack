@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
-interface SignInModalProps {
+interface SignUpModalProps {
   isOpen: boolean
   onClose: () => void
 }
 
-export function SignInModal({ isOpen, onClose }: SignInModalProps) {
+export function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
@@ -20,24 +20,38 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
     setError(null)
 
     const formData = new FormData(event.currentTarget)
-    const email = formData.get('email')
-    const password = formData.get('password')
+    const name = formData.get('name') as string
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const passwordConfirmation = formData.get('passwordConfirmation') as string
+
+    if (password !== passwordConfirmation) {
+      setError('Passwords do not match')
+      setLoading(false)
+      return
+    }
 
     try {
-      const response = await fetch('/api/auth/signin', {
+      const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ name, email, password }),
       })
+
+      const data = await response.json()
 
       if (response.ok) {
         router.push('/profile')
+      } else if (response.status === 409) {
+        setError('User already exists with this email')
+      } else if (response.status === 400) {
+        setError(data.error || 'Invalid input')
       } else {
-        setError('Invalid email or password')
+        setError('Signup failed. Please try again.')
       }
     } catch (err) {
-      console.error("Network error during signin:", err)
-      setError("Network error. Please check your connection.")
+      console.error('Network error during signup:', err)
+      setError('Network error. Please check your connection.')
     } finally {
       setLoading(false)
     }
@@ -48,7 +62,6 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-8 w-full max-w-md relative">
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
@@ -59,7 +72,6 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
         </button>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Google Sign In */}
           <button
             type="button"
             className="flex items-center justify-center gap-3 w-full py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -75,7 +87,14 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
 
           <div className="text-center text-gray-500 text-sm">or</div>
 
-          {/* Email input */}
+          <input
+            type="text"
+            name="name"
+            placeholder="Full name"
+            required
+            className="w-full px-4 text-black py-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+          />
+
           <input
             type="email"
             name="email"
@@ -84,7 +103,6 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
             className="w-full px-4 text-black py-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
 
-          {/* Password input */}
           <input
             type="password"
             name="password"
@@ -93,28 +111,28 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
             className="w-full px-4 py-3 text-black bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
           />
 
+          <input
+            type="password"
+            name="passwordConfirmation"
+            placeholder="Confirm password"
+            required
+            className="w-full px-4 py-3 text-black bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-black"
+          />
+
           {error && (
             <div className="text-red-600 text-sm text-center">{error}</div>
           )}
 
-          {/* Submit button */}
           <button
             type="submit"
             disabled={loading}
             className="w-full py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-800 transition-colors disabled:opacity-50"
           >
-            {loading ? 'Signing in...' : 'Log in'}
+            {loading ? 'Creating account...' : 'Sign up'}
           </button>
 
-          {/* Links */}
-          <div className="flex flex-col gap-2 text-center">
-            <button type="button" className="text-blue-600 hover:underline text-sm bg-transparent border-none cursor-pointer">
-              Reset password
-            </button>
-          </div>
-
           <div className="text-center text-gray-600 text-sm">
-            No account? <Link href="/signup" className="text-blue-600 font-semibold hover:underline">Create one</Link>
+            Already have an account? <Link href="/signin" className="text-blue-600 font-semibold hover:underline">Log in</Link>
           </div>
         </form>
       </div>
