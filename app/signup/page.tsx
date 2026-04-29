@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { InputText } from '../components/InputText'
 import Link from 'next/link'
@@ -11,6 +11,13 @@ export default function SignupPage() {
   const router = useRouter()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [password, setPassword] = useState('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('')
+
+  useEffect(() => {
+    setPassword('')
+    setPasswordConfirmation('')
+  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -20,11 +27,11 @@ export default function SignupPage() {
     const formData = new FormData(event.currentTarget)
     const name = formData.get('name') as string
     const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const passwordConfirmation = formData.get('passwordConfirmation') as string
+    const formPassword = formData.get('password') as string
+    const formPasswordConfirmation = formData.get('passwordConfirmation') as string
 
-    if (password !== passwordConfirmation) {
-      console.log(password, passwordConfirmation)
+    if (formPassword !== formPasswordConfirmation) {
+      console.log(formPassword, formPasswordConfirmation)
       setError("Passwords do not match")
       setLoading(false)
       return
@@ -34,7 +41,7 @@ export default function SignupPage() {
       const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password: formPassword }),
       })
 
       const data = await response.json()
@@ -107,20 +114,22 @@ export default function SignupPage() {
             type="password"
             id="password"
             name="password"
-            // value={formData.password}
-            // onChange={handleChange}
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
             placeholder="Password"
+            autoComplete="new-password"
             required
           />
 
           <InputText
-            label="passwordConfirmation"
-            type="passwordConfirmation"
+            label="Password Confirmation"
+            type="password"
             id="passwordConfirmation"
             name="passwordConfirmation"
-            // value={formData.confirmPassword}
-            // onChange={handleChange}
+            value={passwordConfirmation}
+            onChange={(event) => setPasswordConfirmation(event.target.value)}
             placeholder="Password"
+            autoComplete="new-password"
             required
           />
 
