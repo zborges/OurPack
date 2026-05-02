@@ -31,7 +31,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
       })
 
       if (response.ok) {
-        router.push('/profile')
+        router.push('/dashboard')
       } else {
         setError('Invalid email or password')
       }

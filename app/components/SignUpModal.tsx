@@ -41,7 +41,7 @@ export function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
       const data = await response.json()
 
       if (response.ok) {
-        router.push('/profile')
+        router.push('/dashboard')
       } else if (response.status === 409) {
         setError('User already exists with this email')
       } else if (response.status === 400) {

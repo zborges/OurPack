@@ -5,8 +5,8 @@ import { SignInModal } from '../components/SignInModal'
 import { SignUpModal } from '../components/SignUpModal'
 
 export default function SignInPage() {
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(true)
-  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(true)
+  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false)
+  const [isSignUpModalOpen, setIsSignUpModalOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-white">
