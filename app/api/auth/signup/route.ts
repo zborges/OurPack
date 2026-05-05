@@ -1,6 +1,6 @@
 import { hash } from "bcryptjs";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { users, packs } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -41,7 +41,18 @@ export async function POST(req: NextRequest) {
       })
       .returning();
 
-    return NextResponse.json({ user: { id: newUser.id, email: newUser.email, name: newUser.name } }, { status: 201 });
+    // Auto-create single pack for user
+    const [newPack] = await db
+      .insert(packs)
+      .values({
+        userId: newUser.id,
+      })
+      .returning();
+
+    return NextResponse.json(
+      { user: { id: newUser.id, email: newUser.email, name: newUser.name }, packId: newPack.id },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Signup error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
