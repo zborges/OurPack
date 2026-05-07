@@ -1,5 +1,6 @@
 import { render, screen, waitFor, act } from '../test-utils';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import fetchMock from 'jest-fetch-mock';
 
 // Mock server actions and AddItemModal child component
 jest.mock('@/app/actions/gear', () => ({
@@ -31,7 +32,7 @@ const mockItems = [
 describe('GearList', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    global.fetch = jest.fn() as jest.Mock;
+    fetchMock.mockResponseOnce(JSON.stringify({ data: 'success' }));
   });
 
   it('renders gear items', () => {

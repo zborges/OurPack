@@ -1,7 +1,11 @@
 import '@testing-library/jest-dom';
 
-// MSW server setup for tests that need it
-if (typeof globalThis.Request !== 'undefined') {
+// jest-fetch-mock setup
+const fetchMock = require('jest-fetch-mock');
+fetchMock.enableMocks();
+
+// MSW server setup for tests that need it (only in e2e environment)
+if (typeof globalThis.Request !== 'undefined' && process.env.E2E_TEST) {
   const { setupServer } = require('msw/node');
   const { handlers: serverHandlers } = require('./__tests__/mocks/handlers');
 

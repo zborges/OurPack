@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor, act } from '../test-utils';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
+import fetchMock from 'jest-fetch-mock';
 
 // Mock server actions before importing component
 jest.mock('@/app/actions/gear', () => ({
@@ -21,15 +22,15 @@ const defaultProps = {
   onItemUpdated: mockOnItemUpdated,
 };
 
+const mockResponse = {
+  ok: true,
+  json: async () => ({data: "success"})
+} as unknown as Response
+
 describe('AddItemModal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    global.fetch = jest.fn(() =>
-      Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({ data: 'test' }),
-      })
-    );
+    fetchMock.mockResponseOnce(JSON.stringify({ data: 'success' }));
   });
 
   it('renders when isOpen is true', () => {
@@ -60,7 +61,7 @@ describe('AddItemModal', () => {
       updatedAt: new Date(),
     };
 
-    render(<AddItemModal {...defaultProps} editingItem={editingItem} />);
+    render(<AddItemModal {...defaultProps} editingItem={editingItem as any} />);
 
     expect(screen.getByText('Edit Item')).toBeInTheDocument();
   });
@@ -84,10 +85,7 @@ describe('AddItemModal', () => {
   });
 
   it('closes modal after successful submit', async () => {
-    (global.fetch as jest.Mock).mockResolvedValueOnce({
-      ok: true,
-      json: () => Promise.resolve({ id: 1, name: 'Test', weight: 1, quantity: 1, category: 'shelter', packId: 1 }),
-    } as Response);
+    fetchMock.mockResponseOnce(JSON.stringify({ id: 1, name: 'Test Item', packId: 1 }));
 
     render(<AddItemModal {...defaultProps} />);
 
