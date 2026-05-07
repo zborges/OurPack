@@ -12,17 +12,15 @@ interface GearListProps {
 }
 
 const categoryLabels: Record<string, string> = {
+  pack_and_system: "Pack System",
   shelter: "Shelter",
   sleep_system: "Sleep System",
   clothing: "Clothing",
   filtration_and_cookware: "Filtration & Cookware",
-  toiletries: "Toiletries",
-  repair_and_medkit: "Repair & Medkit",
   electronics: "Electronics",
-  footwear: "Footwear",
+  essentials: "Essentials",
   miscellaneous: "Miscellaneous",
 };
-
 export function GearList({ items: initialItems, packId }: GearListProps) {
   const [items, setItems] = useState<Item[]>(initialItems);
   const [isModalOpen, setIsModalOpen] = useState(false);

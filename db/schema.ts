@@ -11,14 +11,13 @@ import {
 import { relations } from "drizzle-orm";
 
 export const itemCategoryEnum = pgEnum("item_category", [
+  "pack_system",
   "shelter",
   "sleep_system",
   "clothing",
   "filtration_and_cookware",
-  "toiletries",
-  "repair_and_medkit",
+  "essentials",
   "electronics",
-  "footwear",
   "miscellaneous",
 ]);
 

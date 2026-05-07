@@ -12,10 +12,9 @@ const categoryColors: Record<string, string> = {
   sleep_system: "#8B5CF6",
   clothing: "#EC4899",
   filtration_and_cookware: "#F59E0B",
-  toiletries: "#10B981",
-  repair_and_medkit: "#EF4444",
+  pack_system: "#10B981",
   electronics: "#6366F1",
-  footwear: "#14B8A6",
+  essentials: "#14B8A6",
   miscellaneous: "#6B7280",
 };
 
@@ -24,10 +23,8 @@ const categoryLabels: Record<string, string> = {
   sleep_system: "Sleep System",
   clothing: "Clothing",
   filtration_and_cookware: "Filtration & Cookware",
-  toiletries: "Toiletries",
-  repair_and_medkit: "Repair & Medkit",
-  electronics: "Electronics",
-  footwear: "Footwear",
+  pack_system: "Pack System",
+  essentials: "Essentials",
   miscellaneous: "Miscellaneous",
 };
 

@@ -105,7 +105,7 @@ describe('AddItemModal', () => {
   it('renders all category options', () => {
     render(<AddItemModal {...defaultProps} />);
 
-    const options = ['Shelter', 'Sleep System', 'Clothing', 'Filtration & Cookware', 'Toiletries', 'Repair & Medkit', 'Electronics', 'Footwear', 'Miscellaneous'];
+    const options = ['Pack System', 'Shelter', 'Sleep System', 'Clothing', 'Filtration & Cookware', 'Electronics', 'Essentials', 'Miscellaneous'];
     options.forEach(option => {
       expect(screen.getByText(option)).toBeInTheDocument();
     });

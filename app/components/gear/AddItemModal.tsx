@@ -16,14 +16,13 @@ interface AddItemModalProps {
 }
 
 const categoryOptions = [
+  { value: "pack_system", label: "Pack System" },
   { value: "shelter", label: "Shelter" },
   { value: "sleep_system", label: "Sleep System" },
   { value: "clothing", label: "Clothing" },
   { value: "filtration_and_cookware", label: "Filtration & Cookware" },
-  { value: "toiletries", label: "Toiletries" },
-  { value: "repair_and_medkit", label: "Repair & Medkit" },
   { value: "electronics", label: "Electronics" },
-  { value: "footwear", label: "Footwear" },
+  { value: "essentials", label: "Essentials"},
   { value: "miscellaneous", label: "Miscellaneous" },
 ];
 
