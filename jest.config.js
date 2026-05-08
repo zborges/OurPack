@@ -16,6 +16,6 @@ const config = {
   transform: {
     '^.+\\.(tsx|ts|js|jsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
-};
+}
 
-module.exports = config;
+module.exports = config

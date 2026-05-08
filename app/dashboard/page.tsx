@@ -1,20 +1,20 @@
-import { auth } from "@/auth";
-import { db } from "@/db";
-import { packs, items } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { redirect } from "next/navigation";
-import { GearList } from "../components/gear/GearList";
-import { WeightGraph } from "../components/gear/WeightGraph";
-import { calculateTotalWeight, calculateCategoryWeights } from "../lib/weight-calculator";
+import { auth } from '@/auth'
+import { db } from '@/db'
+import { packs, items } from '@/db/schema'
+import { eq } from 'drizzle-orm'
+import { redirect } from 'next/navigation'
+import { GearList } from '../components/gear/GearList'
+import { WeightGraph } from '../components/gear/WeightGraph'
+import { calculateTotalWeight, calculateCategoryWeights } from '../lib/weight-calculator'
 
 export default async function DashboardPage() {
-  const session = await auth();
+  const session = await auth()
 
   if (!session?.user) {
-    redirect("/signin");
+    redirect('/signin')
   }
 
-  const userId = Number(session.user.id);
+  const userId = Number(session.user.id)
 
   // Find user's single pack
   const userPack = await db.query.packs.findFirst({
@@ -22,15 +22,15 @@ export default async function DashboardPage() {
     with: {
       items: true,
     },
-  });
+  })
 
   if (!userPack) {
     // Should not happen if signup creates pack, but handle gracefully
-    redirect("/signin");
+    redirect('/signin')
   }
 
-  const totalWeight = calculateTotalWeight(userPack.items);
-  const categoryWeights = calculateCategoryWeights(userPack.items);
+  const totalWeight = calculateTotalWeight(userPack.items)
+  const categoryWeights = calculateCategoryWeights(userPack.items)
 
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-gray-900">
@@ -52,5 +52,5 @@ export default async function DashboardPage() {
         </div>
       </main>
     </div>
-  );
+  )
 }

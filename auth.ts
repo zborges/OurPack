@@ -1,37 +1,37 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { compare } from "bcryptjs";
-import { db } from "./db";
-import { users } from "./db/schema";
-import { eq } from "drizzle-orm";
-import { authConfig } from "./auth.config";
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
+import { compare } from 'bcryptjs'
+import { db } from './db'
+import { users } from './db/schema'
+import { eq } from 'drizzle-orm'
+import { authConfig } from './auth.config'
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
     Credentials({
       async authorize(credentials) {
-        const { email, password } = credentials as { email: string; password: string };
+        const { email, password } = credentials as { email: string; password: string }
 
         const user = await db.query.users.findFirst({
           where: eq(users.email, email),
-        });
+        })
 
         if (!user || !user.passwordDigest) {
-          return null;
+          return null
         }
 
-        const isPasswordValid = await compare(password, user.passwordDigest);
+        const isPasswordValid = await compare(password, user.passwordDigest)
 
         if (!isPasswordValid) {
-          return null;
+          return null
         }
 
         return {
           id: user.id.toString(),
           email: user.email,
           name: user.name,
-        };
+        }
       },
     }),
   ],
@@ -40,9 +40,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     ...authConfig.callbacks,
     async session({ session, token }) {
       if (session.user && token.sub) {
-        session.user.id = token.sub;
+        session.user.id = token.sub
       }
-      return session;
+      return session
     },
   },
-});
+})

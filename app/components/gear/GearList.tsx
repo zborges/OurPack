@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import { items } from "@/db/schema";
-import { AddItemModal } from "./AddItemModal";
+import { useState } from 'react'
+import { items } from '@/db/schema'
+import { AddItemModal } from './AddItemModal'
 
 type Item = typeof items.$inferSelect;
 
@@ -12,59 +12,59 @@ interface GearListProps {
 }
 
 const categoryLabels: Record<string, string> = {
-  pack_and_system: "Pack System",
-  shelter: "Shelter",
-  sleep_system: "Sleep System",
-  clothing: "Clothing",
-  filtration_and_cookware: "Filtration & Cookware",
-  electronics: "Electronics",
-  essentials: "Essentials",
-  miscellaneous: "Miscellaneous",
-};
+  pack_and_system: 'Pack System',
+  shelter: 'Shelter',
+  sleep_system: 'Sleep System',
+  clothing: 'Clothing',
+  filtration_and_cookware: 'Filtration & Cookware',
+  electronics: 'Electronics',
+  essentials: 'Essentials',
+  miscellaneous: 'Miscellaneous',
+}
 export function GearList({ items: initialItems, packId }: GearListProps) {
-  const [items, setItems] = useState<Item[]>(initialItems);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Item | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [items, setItems] = useState<Item[]>(initialItems)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingItem, setEditingItem] = useState<Item | null>(null)
+  const [selectedCategory, setSelectedCategory] = useState<string>('all')
 
-  const categories = ["all", ...Object.keys(categoryLabels)];
+  const categories = ['all', ...Object.keys(categoryLabels)]
 
   const filteredItems =
-    selectedCategory === "all"
+    selectedCategory === 'all'
       ? items
-      : items.filter((item) => item.category === selectedCategory);
+      : items.filter((item) => item.category === selectedCategory)
 
   const handleDelete = async (id: number) => {
-    if (!confirm("Delete this item?")) return;
+    if (!confirm('Delete this item?')) return
 
-    const res = await fetch("/api/gear", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
+    const res = await fetch('/api/gear', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id }),
-    });
+    })
 
     if (res.ok) {
-      setItems(items.filter((i) => i.id !== id));
+      setItems(items.filter((i) => i.id !== id))
     }
-  };
+  }
 
   const handleEdit = (item: Item) => {
-    setEditingItem(item);
-    setIsModalOpen(true);
-  };
+    setEditingItem(item)
+    setIsModalOpen(true)
+  }
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-    setEditingItem(null);
-  };
+    setIsModalOpen(false)
+    setEditingItem(null)
+  }
 
   const handleItemAdded = (newItem: Item) => {
-    setItems([...items, newItem]);
-  };
+    setItems([...items, newItem])
+  }
 
   const handleItemUpdated = (updatedItem: Item) => {
-    setItems(items.map((i) => (i.id === updatedItem.id ? updatedItem : i)));
-  };
+    setItems(items.map((i) => (i.id === updatedItem.id ? updatedItem : i)))
+  }
 
   return (
     <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800">
@@ -86,8 +86,8 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1 rounded-full text-sm whitespace-nowrap ${
                 selectedCategory === cat
-                  ? "bg-black text-white dark:bg-white dark:text-black"
-                  : "bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                  ? 'bg-black text-white dark:bg-white dark:text-black'
+                  : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700'
               }`}
             >
               {categoryLabels[cat] || cat}
@@ -99,7 +99,7 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
       <div className="divide-y divide-zinc-200 dark:divide-zinc-800">
         {filteredItems.length === 0 ? (
           <p className="p-8 text-center text-zinc-500">
-            No items{selectedCategory !== "all" ? ` in ${categoryLabels[selectedCategory]}` : ""}. Add your first item above.
+            No items{selectedCategory !== 'all' ? ` in ${categoryLabels[selectedCategory]}` : ''}. Add your first item above.
           </p>
         ) : (
           filteredItems.map((item) => (
@@ -111,7 +111,7 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
                 <h3 className="font-medium">{item.name}</h3>
                 <p className="text-sm text-zinc-500">
                   {/* using toFixed on a "real" is failing */}
-                  {Number(item.weight)?.toFixed(2) ?? 0} lbs × {item.quantity ?? 1} ={" "}
+                  {Number(item.weight)?.toFixed(2) ?? 0} lbs × {item.quantity ?? 1} ={' '}
                   {((item.weight ?? 0) * (item.quantity ?? 1)).toFixed(2)} lbs
                 </p>
                 {item.description && (
@@ -151,5 +151,5 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
         onItemUpdated={handleItemUpdated}
       />
     </div>
-  );
+  )
 }

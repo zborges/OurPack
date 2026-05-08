@@ -1,8 +1,8 @@
-"use client";
+'use client'
 
-import { useEffect, useState } from "react";
-import { items } from "@/db/schema";
-import { createItem, updateItem } from "@/app/actions/gear";
+import { useEffect, useState } from 'react'
+import { items } from '@/db/schema'
+import { createItem, updateItem } from '@/app/actions/gear'
 
 type Item = typeof items.$inferSelect;
 
@@ -16,15 +16,15 @@ interface AddItemModalProps {
 }
 
 const categoryOptions = [
-  { value: "pack_system", label: "Pack System" },
-  { value: "shelter", label: "Shelter" },
-  { value: "sleep_system", label: "Sleep System" },
-  { value: "clothing", label: "Clothing" },
-  { value: "filtration_and_cookware", label: "Filtration & Cookware" },
-  { value: "electronics", label: "Electronics" },
-  { value: "essentials", label: "Essentials"},
-  { value: "miscellaneous", label: "Miscellaneous" },
-];
+  { value: 'pack_system', label: 'Pack System' },
+  { value: 'shelter', label: 'Shelter' },
+  { value: 'sleep_system', label: 'Sleep System' },
+  { value: 'clothing', label: 'Clothing' },
+  { value: 'filtration_and_cookware', label: 'Filtration & Cookware' },
+  { value: 'electronics', label: 'Electronics' },
+  { value: 'essentials', label: 'Essentials' },
+  { value: 'miscellaneous', label: 'Miscellaneous' },
+]
 
 export function AddItemModal({
   isOpen,
@@ -35,80 +35,80 @@ export function AddItemModal({
   onItemUpdated,
 }: AddItemModalProps) {
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    weight: "",
+    name: '',
+    description: '',
+    weight: '',
     quantity: 1,
-    url: "",
-    category: "shelter",
-  });
+    url: '',
+    category: 'shelter',
+  })
 
   useEffect(() => {
     if (editingItem) {
       setFormData({
-        name: editingItem.name ?? "",
-        description: editingItem.description ?? "",
-        weight: editingItem.weight?.toString() ?? "",
+        name: editingItem.name ?? '',
+        description: editingItem.description ?? '',
+        weight: editingItem.weight?.toString() ?? '',
         quantity: editingItem.quantity ?? 1,
-        url: editingItem.url ?? "",
-        category: editingItem.category ?? "shelter",
-      });
+        url: editingItem.url ?? '',
+        category: editingItem.category ?? 'shelter',
+      })
     } else {
       setFormData({
-        name: "",
-        description: "",
-        weight: "",
+        name: '',
+        description: '',
+        weight: '',
         quantity: 1,
-        url: "",
-        category: "shelter",
-      });
+        url: '',
+        category: 'shelter',
+      })
     }
-  }, [editingItem, isOpen]);
+  }, [editingItem, isOpen])
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const form = new FormData();
-    form.set("packId", packId.toString());
-    form.set("name", formData.name);
-    form.set("description", formData.description);
-    form.set("weight", formData.weight);
-    form.set("quantity", formData.quantity.toString());
-    form.set("url", formData.url);
-    form.set("category", formData.category);
+    const form = new FormData()
+    form.set('packId', packId.toString())
+    form.set('name', formData.name)
+    form.set('description', formData.description)
+    form.set('weight', formData.weight)
+    form.set('quantity', formData.quantity.toString())
+    form.set('url', formData.url)
+    form.set('category', formData.category)
 
     if (editingItem) {
-      await updateItem(editingItem.id, form);
-      onItemUpdated?.({ ...editingItem, ...formData } as unknown as Item);
+      await updateItem(editingItem.id, form)
+      onItemUpdated?.({ ...editingItem, ...formData } as unknown as Item)
     } else {
-      const res = await fetch("/api/gear", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('/api/gear', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           packId,
           ...formData,
           weight: Number(formData.weight),
           quantity: Number(formData.quantity),
         }),
-      });
+      })
 
       if (res.ok) {
-        const newItem = await res.json();
-        onItemAdded?.(newItem);
+        const newItem = await res.json()
+        onItemAdded?.(newItem)
       }
     }
 
-    onClose();
-  };
+    onClose()
+  }
 
-  if (!isOpen) return null;
+  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white dark:bg-zinc-900 rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
           <h2 className="text-lg font-semibold">
-            {editingItem ? "Edit Item" : "Add New Item"}
+            {editingItem ? 'Edit Item' : 'Add New Item'}
           </h2>
           <button
             onClick={onClose}
@@ -153,7 +153,7 @@ export function AddItemModal({
                 min="0"
                 value={formData.weight}
                 onChange={(e) =>
-                  setFormData({ ...formData, weight: e.target.value ?? 0})
+                  setFormData({ ...formData, weight: e.target.value ?? 0 })
                 }
                 className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               />
@@ -214,11 +214,11 @@ export function AddItemModal({
               type="submit"
               className="flex-1 px-4 py-2 bg-black text-white rounded-md hover:bg-zinc-800 dark:bg-white dark:text-black dark:hover:bg-zinc-200"
             >
-              {editingItem ? "Save Changes" : "Add Item"}
+              {editingItem ? 'Save Changes' : 'Add Item'}
             </button>
           </div>
         </form>
       </div>
     </div>
-  );
+  )
 }
