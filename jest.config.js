@@ -14,7 +14,11 @@ const config = {
     '!app/**/page.{js,jsx,ts,tsx}',
   ],
   transform: {
-    '^.+\\.(tsx|ts|js|jsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(tsx|ts|jsx|js)$': ['ts-jest', {
+      tsconfig: {
+        jsx: 'react-jsx',
+      },
+    }],
   },
 }
 

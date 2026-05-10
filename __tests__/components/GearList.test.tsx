@@ -81,7 +81,7 @@ describe('GearList', () => {
     render(<GearList items={[...mockItems]} packId={1} />)
 
     // Rain Jacket has quantity 2, weight 0.5 each = 1.0 lbs total
-    expect(screen.getByText(/1\.00 lbs/)).toBeInTheDocument()
+    expect(screen.getAllByText(/1\.00 lbs/)).toHaveLength(3)
   })
 
   it('opens modal on Add Item click', async () => {
