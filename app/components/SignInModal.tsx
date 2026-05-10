@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -36,8 +36,8 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
         setError('Invalid email or password')
       }
     } catch (err) {
-      console.error("Network error during signin:", err)
-      setError("Network error. Please check your connection.")
+      console.error('Network error during signin:', err)
+      setError('Network error. Please check your connection.')
     } finally {
       setLoading(false)
     }

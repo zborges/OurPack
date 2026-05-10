@@ -1,14 +1,14 @@
-import { defineConfig } from "drizzle-kit";
+import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
-  schema: "./db/schema.ts", // Path to your schema file
-  out: "./drizzle",         // Folder for migration files
-  dialect: "postgresql",    // "postgresql", "mysql", or "sqlite"
+  schema: './db/schema.ts', // Path to your schema file
+  out: './drizzle',         // Folder for migration files
+  dialect: 'postgresql',    // "postgresql", "mysql", or "sqlite"
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
   migrations: {
-    table: "__drizzle_migrations",
-    schema: "drizzle",
+    table: '__drizzle_migrations',
+    schema: 'drizzle',
   },
-});
+})

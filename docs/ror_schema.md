@@ -47,10 +47,9 @@
     sleep_system: 1,
     clothing: 2,
     filtration_and_cookware: 3,
-    toiletries: 4,
     repair_and_medkit: 5,
-    electronics: 7,
-    footwear: 8,
+    essentials: ,
+    
     miscellaneous: 9
   }
   

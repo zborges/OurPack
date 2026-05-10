@@ -4,7 +4,7 @@ const config = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/e2e/', '<rootDir>/__tests__/mocks/'],
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/app/$1',
+    '^@/(.*)$': '<rootDir>/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
   collectCoverageFrom: [
@@ -14,8 +14,12 @@ const config = {
     '!app/**/page.{js,jsx,ts,tsx}',
   ],
   transform: {
-    '^.+\\.(tsx|ts|js|jsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    '^.+\\.(tsx|ts|jsx|js)$': ['ts-jest', {
+      tsconfig: {
+        jsx: 'react-jsx',
+      },
+    }],
   },
-};
+}
 
-module.exports = config;
+module.exports = config
