@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { InputText } from '../components/InputText'
 import Link from 'next/link'
@@ -13,11 +13,6 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const [password, setPassword] = useState('')
   const [passwordConfirmation, setPasswordConfirmation] = useState('')
-
-  useEffect(() => {
-    setPassword('')
-    setPasswordConfirmation('')
-  }, [])
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()

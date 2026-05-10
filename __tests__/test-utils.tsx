@@ -2,13 +2,13 @@ import { render, RenderOptions } from '@testing-library/react'
 import { ReactElement, ReactNode } from 'react'
 
 // Polyfill for TextEncoder (required by pg/drizzle)
+import { TextEncoder, TextDecoder } from 'util'
+
 if (typeof global.TextEncoder === 'undefined') {
-  const { TextEncoder } = require('util')
   global.TextEncoder = TextEncoder
 }
 
 if (typeof global.TextDecoder === 'undefined') {
-  const { TextDecoder } = require('util')
   global.TextDecoder = TextDecoder
 }
 

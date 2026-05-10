@@ -1,6 +1,7 @@
-import { render, screen, waitFor, act } from '../test-utils'
+import { render, screen, act } from '../test-utils'
 import { describe, it, expect, jest, beforeEach } from '@jest/globals'
 import fetchMock from 'jest-fetch-mock'
+import type { Item } from '@/db/schema'
 
 // Mock server actions and AddItemModal child component
 jest.mock('@/app/actions/gear', () => ({
@@ -9,13 +10,18 @@ jest.mock('@/app/actions/gear', () => ({
 }))
 
 jest.mock('@/app/components/gear/AddItemModal', () => ({
-  AddItemModal: function MockAddItemModal({ isOpen, onClose, onItemAdded, onItemUpdated }: any) {
+  AddItemModal: function MockAddItemModal({ isOpen, onClose, onItemAdded, onItemUpdated }: {
+    isOpen: boolean
+    onClose: () => void
+    onItemAdded?: (item: Item) => void
+    onItemUpdated?: (item: Item) => void
+  }) {
     if (!isOpen) return null
     return (
       <div data-testid="add-item-modal">
         <button onClick={onClose}>Close Modal</button>
-        <button onClick={() => onItemAdded?.({ id: 99, name: 'Added Item' })}>Simulate Add</button>
-        <button onClick={() => onItemUpdated?.({ id: 1, name: 'Updated Item' })}>Simulate Update</button>
+        <button onClick={() => onItemAdded?.({ id: 99, name: 'Added Item' } as Item)}>Simulate Add</button>
+        <button onClick={() => onItemUpdated?.({ id: 1, name: 'Updated Item' } as Item)}>Simulate Update</button>
       </div>
     )
   },

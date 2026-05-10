@@ -42,6 +42,16 @@ const eslintConfig = defineConfig([
       'array-bracket-spacing': ['error', 'never'],
     },
   },
+  // Test config files - allow require() for Jest setup
+  {
+    files: ['jest.setup.js', 'jest.config.js', '__tests__/test-utils.tsx'],
+    languageOptions: {
+      globals: { ...globals.node, ...globals.jest },
+    },
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ])
 
 export default eslintConfig

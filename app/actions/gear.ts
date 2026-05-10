@@ -1,10 +1,11 @@
 'use server'
 
 import { db } from '@/db'
-import { items, packs, users } from '@/db/schema'
+import { items, itemCategoryEnum } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+
+type ItemCategory = typeof itemCategoryEnum.enumValues[number]
 
 export async function createItem(formData: FormData) {
   const packId = Number(formData.get('packId'))
@@ -26,14 +27,21 @@ export async function createItem(formData: FormData) {
     weight,
     quantity,
     url,
-    category: category as any,
+    category: category as ItemCategory,
   })
 
   revalidatePath('/dashboard')
 }
 
 export async function updateItem(id: number, formData: FormData) {
-  const updateData: any = {}
+  const updateData: Partial<{
+    name: string
+    description: string
+    weight: number
+    quantity: number
+    url: string
+    category: ItemCategory
+  }> = {}
 
   const name = formData.get('name')
   if (name) updateData.name = name as string
@@ -51,7 +59,7 @@ export async function updateItem(id: number, formData: FormData) {
   if (url) updateData.url = url as string
 
   const category = formData.get('category')
-  if (category) updateData.category = category as any
+  if (category) updateData.category = category as ItemCategory
 
   await db.update(items).set(updateData).where(eq(items.id, id))
 

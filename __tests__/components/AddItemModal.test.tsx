@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor, act } from '../test-utils'
 import { describe, it, expect, jest, beforeEach } from '@jest/globals'
 import fetchMock from 'jest-fetch-mock'
+import type { Item } from '@/db/schema'
 
 // Mock server actions before importing component
 jest.mock('@/app/actions/gear', () => ({
@@ -21,11 +22,6 @@ const defaultProps = {
   onItemAdded: mockOnItemAdded,
   onItemUpdated: mockOnItemUpdated,
 }
-
-const mockResponse = {
-  ok: true,
-  json: async () => ({ data: 'success' }),
-} as unknown as Response
 
 describe('AddItemModal', () => {
   beforeEach(() => {
@@ -48,7 +44,7 @@ describe('AddItemModal', () => {
   })
 
   it('renders Edit Item title when editingItem provided', () => {
-    const editingItem = {
+    const editingItem: Item = {
       id: 1,
       name: 'Existing Item',
       weight: 1.5,
@@ -61,7 +57,7 @@ describe('AddItemModal', () => {
       updatedAt: new Date(),
     }
 
-    render(<AddItemModal {...defaultProps} editingItem={editingItem as any} />)
+    render(<AddItemModal {...defaultProps} editingItem={editingItem} />)
 
     expect(screen.getByText('Edit Item')).toBeInTheDocument()
   })

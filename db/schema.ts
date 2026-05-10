@@ -74,3 +74,5 @@ export const itemsRelations = relations(items, ({ one }) => ({
     references: [packs.id],
   }),
 }))
+
+export type Item = typeof items.$inferSelect
