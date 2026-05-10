@@ -15,8 +15,24 @@ export function calculateTotalWeight(itemList: Item[]): number {
   }, 0)
 }
 
+const ALL_CATEGORIES = [
+  'pack_system',
+  'shelter',
+  'sleep_system',
+  'clothing',
+  'filtration_and_cookware',
+  'essentials',
+  'electronics',
+  'miscellaneous',
+]
+
 export function calculateCategoryWeights(itemList: Item[]): CategoryWeight[] {
   const categoryMap = new Map<string, { totalWeight: number; itemCount: number }>()
+
+  // Initialize all categories with 0
+  ALL_CATEGORIES.forEach((cat) => {
+    categoryMap.set(cat, { totalWeight: 0, itemCount: 0 })
+  })
 
   itemList.forEach((item) => {
     const category = item.category ?? 'miscellaneous'

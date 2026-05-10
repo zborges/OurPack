@@ -29,7 +29,7 @@ const categoryLabels: Record<string, string> = {
 }
 
 export function WeightGraph({ categoryWeights, totalWeight }: WeightGraphProps) {
-  if (categoryWeights.length === 0 || totalWeight === 0) {
+  if (categoryWeights.length === 0) {
     return (
       <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800 p-6">
         <h2 className="text-lg font-semibold mb-4">Weight Distribution</h2>

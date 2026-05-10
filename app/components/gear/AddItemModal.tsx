@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useReducer } from 'react'
 import { items } from '@/db/schema'
-import { createItem, updateItem } from '@/app/actions/gear'
+import { updateItem } from '@/app/actions/gear'
 
 type Item = typeof items.$inferSelect;
 
@@ -26,6 +26,39 @@ const categoryOptions = [
   { value: 'miscellaneous', label: 'Miscellaneous' },
 ]
 
+interface FormData {
+  name: string;
+  description: string;
+  weight: string;
+  quantity: number;
+  url: string;
+  category: string;
+}
+
+type FormAction =
+  | { type: 'SET_FIELD'; field: keyof FormData; value: string | number }
+  | { type: 'RESET' }
+
+const createInitialState = (editingItem?: Item | null): FormData => ({
+  name: editingItem?.name ?? '',
+  description: editingItem?.description ?? '',
+  weight: editingItem?.weight?.toString() ?? '',
+  quantity: editingItem?.quantity ?? 1,
+  url: editingItem?.url ?? '',
+  category: editingItem?.category ?? 'shelter',
+})
+
+function formReducer(state: FormData, action: FormAction): FormData {
+  switch (action.type) {
+  case 'SET_FIELD':
+    return { ...state, [action.field]: action.value }
+  case 'RESET':
+    return createInitialState()
+  default:
+    return state
+  }
+}
+
 export function AddItemModal({
   isOpen,
   onClose,
@@ -34,36 +67,7 @@ export function AddItemModal({
   onItemAdded,
   onItemUpdated,
 }: AddItemModalProps) {
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    weight: '',
-    quantity: 1,
-    url: '',
-    category: 'shelter',
-  })
-
-  useEffect(() => {
-    if (editingItem) {
-      setFormData({
-        name: editingItem.name ?? '',
-        description: editingItem.description ?? '',
-        weight: editingItem.weight?.toString() ?? '',
-        quantity: editingItem.quantity ?? 1,
-        url: editingItem.url ?? '',
-        category: editingItem.category ?? 'shelter',
-      })
-    } else {
-      setFormData({
-        name: '',
-        description: '',
-        weight: '',
-        quantity: 1,
-        url: '',
-        category: 'shelter',
-      })
-    }
-  }, [editingItem, isOpen])
+  const [formData, dispatch] = useReducer(formReducer, editingItem, createInitialState)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -125,7 +129,7 @@ export function AddItemModal({
               type="text"
               value={formData.name}
               onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
+                dispatch({ type: 'SET_FIELD', field: 'name', value: e.target.value })
               }
               className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               required
@@ -137,7 +141,7 @@ export function AddItemModal({
             <textarea
               value={formData.description}
               onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
+                dispatch({ type: 'SET_FIELD', field: 'description', value: e.target.value })
               }
               className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               rows={3}
@@ -153,7 +157,7 @@ export function AddItemModal({
                 min="0"
                 value={formData.weight}
                 onChange={(e) =>
-                  setFormData({ ...formData, weight: e.target.value ?? 0 })
+                  dispatch({ type: 'SET_FIELD', field: 'weight', value: e.target.value })
                 }
                 className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               />
@@ -165,7 +169,7 @@ export function AddItemModal({
                 min="1"
                 value={formData.quantity}
                 onChange={(e) =>
-                  setFormData({ ...formData, quantity: Number(e.target.value) ?? 1 })
+                  dispatch({ type: 'SET_FIELD', field: 'quantity', value: Number(e.target.value) })
                 }
                 className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               />
@@ -177,7 +181,7 @@ export function AddItemModal({
             <select
               value={formData.category}
               onChange={(e) =>
-                setFormData({ ...formData, category: e.target.value })
+                dispatch({ type: 'SET_FIELD', field: 'category', value: e.target.value })
               }
               className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
             >
@@ -195,7 +199,7 @@ export function AddItemModal({
               type="url"
               value={formData.url}
               onChange={(e) =>
-                setFormData({ ...formData, url: e.target.value })
+                dispatch({ type: 'SET_FIELD', field: 'url', value: e.target.value })
               }
               className="w-full px-3 py-2 border border-zinc-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800"
               placeholder="https://..."
