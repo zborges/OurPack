@@ -9,7 +9,7 @@ if (typeof global.TextEncoder === 'undefined') {
 }
 
 if (typeof global.TextDecoder === 'undefined') {
-  global.TextDecoder = TextDecoder
+  global.TextDecoder = TextDecoder as unknown as typeof globalThis.TextDecoder
 }
 
 interface CustomRenderOptions extends Omit<RenderOptions, 'wrapper'> {
