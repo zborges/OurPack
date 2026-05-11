@@ -77,7 +77,7 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
         <WeightGraph categoryWeights={categoryWeights} totalWeight={totalWeight} />
       </div>
 
-      <div className="flex-1 bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800">
+      <div className="flex-1 min-w-0 bg-white dark:bg-zinc-900 rounded-lg shadow-sm border border-zinc-200 dark:border-zinc-800">
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 flex justify-between items-center">
           <h2 className="text-lg font-semibold">Gear Items</h2>
           <button
@@ -89,12 +89,18 @@ export function GearList({ items: initialItems, packId }: GearListProps) {
         </div>
 
         <div className="p-4 border-b border-zinc-200 dark:border-zinc-800">
-          <div className="flex gap-2 overflow-x-auto">
+          <style>{`
+            .category-scroll::-webkit-scrollbar { height: 3px; }
+            .category-scroll::-webkit-scrollbar-track { background: transparent; }
+            .category-scroll::-webkit-scrollbar-thumb { background-color: #000; border-radius: 9999px; }
+            .dark .category-scroll::-webkit-scrollbar-thumb { background-color: #fff; }
+          `}</style>
+          <div className="flex gap-2 overflow-x-auto [scrollbar-width:thin] [scrollbar-color:black_transparent] dark:[scrollbar-color:white_transparent] [transform:scaleY(-1)] category-scroll pb-2">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1 rounded-full text-sm whitespace-nowrap ${
+                className={`px-3 py-1 rounded-full text-sm whitespace-nowrap [transform:scaleY(-1)] ${
                   selectedCategory === cat
                     ? 'bg-black text-white dark:bg-white dark:text-black'
                     : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400 hover:bg-zinc-200 dark:hover:bg-zinc-700'

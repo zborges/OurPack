@@ -24,6 +24,7 @@ const categoryLabels: Record<string, string> = {
   clothing: 'Clothing',
   filtration_and_cookware: 'Filtration & Cookware',
   pack_system: 'Pack System',
+  electronics: 'Electronics',
   essentials: 'Essentials',
   miscellaneous: 'Miscellaneous',
 }
@@ -58,9 +59,9 @@ export function WeightGraph({ categoryWeights, totalWeight }: WeightGraphProps) 
 
           return (
             <div key={cat.category}>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="font-medium">{categoryLabels[cat.category] || cat.category}</span>
-                <span className="text-zinc-500">
+              <div className="flex justify-between text-sm mb-1 min-w-0">
+                <span className="font-medium truncate min-w-0">{categoryLabels[cat.category] || cat.category}</span>
+                <span className="text-zinc-500 whitespace-nowrap shrink-0 ml-2">
                   {cat.totalWeight.toFixed(2)} lbs ({percentage.toFixed(1)}%)
                 </span>
               </div>
