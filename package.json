@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "docker-up": "docker-compose up --build",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -11,7 +12,9 @@
     "test:unit": "jest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "db:seed": "dotenv -- tsx db/seed.ts"
+    "db:seed": "dotenv -- tsx db/seed.ts",
+"db:migrate": "dotenv -- drizzle-kit migrate",
+"db:push": "dotenv -- drizzle-kit push"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
